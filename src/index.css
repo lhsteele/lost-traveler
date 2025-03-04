@@ -1,8 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: "DragonHunter";
+  src: url("/fonts/DragonHunter-font.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: DragonHunter, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
