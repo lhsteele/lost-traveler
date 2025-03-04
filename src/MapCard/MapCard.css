@@ -1,0 +1,11 @@
+.map-card {
+  height: 500px;
+  min-width: 400px;
+  border-radius: 10px;
+  border: 1px solid 9d6666;
+  background-color: #fcf6e8;
+  background-image: url("../assets/parchment.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

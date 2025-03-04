@@ -7,8 +7,9 @@
   font-weight: normal;
   font-style: normal;
 }
-:root {
+/* :root {
   font-family: DragonHunter, sans-serif;
+  height: 100vh;
   line-height: 1.5;
   font-weight: 400;
 
@@ -74,4 +75,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
