@@ -1,0 +1,9 @@
+.header {
+  height: max-content;
+  width: max-content;
+  padding: 30px 100px;
+  color: #05261f;
+  text-shadow: 5px 5px 5px #f3e9d9;
+  margin: auto;
+  font-size: 2em;
+}
