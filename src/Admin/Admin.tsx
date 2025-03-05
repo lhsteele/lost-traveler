@@ -20,6 +20,9 @@ type SupabaseUserType = {
 const Admin: FunctionComponent = () => {
   const [user, setUser] = useState<null | SupabaseUserType>(null);
   const navigate = useNavigate();
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [mapLabel, setMapLabel] = useState("");
 
   useEffect(() => {
     const checkUser = async () => {
@@ -50,11 +53,60 @@ const Admin: FunctionComponent = () => {
     checkUser();
   }, [navigate]);
 
+  const handleMapLabelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMapLabel(event.target.value);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFile(event.target.files[0]);
+    }
+  };
+
+  const uploadFile = async () => {
+    if (!file) return alert("Please select a file");
+
+    setUploading(true);
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${mapLabel}.${fileExt}`;
+    const filePath = `uploads/${fileName}`;
+
+    const { error } = await supabase.storage
+      .from("maps")
+      .upload(filePath, file);
+
+    setUploading(false);
+
+    if (error) {
+      console.error("Upload error:", error.message);
+      alert("Upload failed");
+    } else {
+      alert("File uploaded successfully!");
+      setFile(null);
+    }
+  };
+
   return (
-    <div>
+    <div className="admin">
       <h1>Admin Panel</h1>
-      {user && <p>Welcome, {user.email}</p>}
-      {/* Upload functionality goes here */}
+      {user && (
+        <div className="admin-content">
+          <label htmlFor="map-label-input">Map label:</label>
+          <input
+            id="map-label-input"
+            type="text"
+            onChange={handleMapLabelChange}
+          />
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept="image/*,.pdf"
+          />
+          <button onClick={uploadFile} disabled={uploading}>
+            {uploading ? "Uploading..." : "Upload file"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -39,6 +39,7 @@ const AuthModal: FunctionComponent<AuthModalProps> = ({ onClose }) => {
 
     // If the user exists, proceed with the app logic
     console.log("User logged in successfully", userData);
+    onClose();
     navigate("/admin");
 
     setLoading(false);

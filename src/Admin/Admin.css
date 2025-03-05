@@ -6,9 +6,20 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 }
 
 .admin-icon-btn {
   position: fixed;
   right: 5px;
+}
+
+.admin-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
