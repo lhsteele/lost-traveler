@@ -1,0 +1,14 @@
+.admin {
+  margin: auto;
+  width: 80%;
+  height: 50%;
+  background-image: url("../assets/parchment.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.admin-icon-btn {
+  position: fixed;
+  right: 5px;
+}
