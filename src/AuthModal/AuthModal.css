@@ -15,3 +15,12 @@
   background-color: #f8f5f1;
   z-index: 100;
 }
+
+.auth-input,
+.auth-modal-btn {
+  border-radius: 5px;
+  height: 2em;
+  border: 1px solid #05261f;
+  padding: 0 10px;
+  background-color: #f8f5f1;
+}

@@ -37,7 +37,6 @@ const AuthModal: FunctionComponent<AuthModalProps> = ({ onClose }) => {
       return;
     }
 
-    // If the user exists, proceed with the app logic
     console.log("User logged in successfully", userData);
     onClose();
     navigate("/admin");
@@ -47,30 +46,30 @@ const AuthModal: FunctionComponent<AuthModalProps> = ({ onClose }) => {
 
   return (
     <div className="auth-modal">
-      <h2 className="text-xl font-bold mb-4">Admin Login</h2>
+      <h2>Admin Login</h2>
       <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full p-2 border rounded mb-2"
+        className="auth-input"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="w-full p-2 border rounded mb-4"
+        className="auth-input"
       />
       {error && <p className="text-red-500">{error}</p>}
       <button
         onClick={handleLogin}
-        className="bg-blue-500 text-white p-2 w-full rounded"
+        className="auth-modal-btn"
         disabled={loading}
       >
         {loading ? "Logging in..." : "Login"}
       </button>
-      <button onClick={onClose} className="mt-2 w-full p-2 bg-gray-300 rounded">
+      <button onClick={onClose} className="auth-modal-btn">
         Cancel
       </button>
     </div>
