@@ -57,6 +57,10 @@ const Admin: FunctionComponent = () => {
     setMapLabel(event.target.value);
   };
 
+  const handleBackClick = () => {
+    navigate("/");
+  };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setFile(event.target.files[0]);
@@ -96,14 +100,22 @@ const Admin: FunctionComponent = () => {
             id="map-label-input"
             type="text"
             onChange={handleMapLabelChange}
+            className="admin-input"
           />
           <input
             type="file"
             onChange={handleFileChange}
             accept="image/*,.pdf"
           />
-          <button onClick={uploadFile} disabled={uploading}>
+          <button
+            onClick={uploadFile}
+            disabled={uploading}
+            className="admin-btn"
+          >
             {uploading ? "Uploading..." : "Upload file"}
+          </button>
+          <button onClick={handleBackClick} className="admin-btn">
+            Back
           </button>
         </div>
       )}

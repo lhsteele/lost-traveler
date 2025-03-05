@@ -24,3 +24,7 @@
   padding: 0 10px;
   background-color: #f8f5f1;
 }
+
+.auth-modal-btn {
+  cursor: pointer;
+}

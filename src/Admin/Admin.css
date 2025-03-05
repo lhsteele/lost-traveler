@@ -23,3 +23,27 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.admin-input,
+.admin-btn {
+  border-radius: 5px;
+  height: 2em;
+  border: 1px solid #05261f;
+  padding: 0 10px;
+  background-color: #f8f5f1;
+}
+
+.admin-btn {
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  border: 1px solid #05261f;
+  background-color: #f8f5f1;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+input[type="file"]::file-selector-button:hover {
+  cursor: pointer;
+}
