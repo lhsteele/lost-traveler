@@ -3,7 +3,8 @@
   width: max-content;
   padding: 30px 100px;
   color: #05261f;
-  text-shadow: 5px 5px 5px #f3e9d9;
+  /* text-shadow: 5px 5px 5px #e1a749; */
+  text-shadow: 5px 5px 5px #be9d3b;
   margin: auto;
   font-size: 2em;
 }
