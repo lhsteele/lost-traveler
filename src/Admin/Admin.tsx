@@ -2,6 +2,9 @@ import { FunctionComponent, useEffect, useState } from "react";
 import "./Admin.css";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient.ts";
+import axios from "axios";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 type SupabaseUserType = {
   id: string;
@@ -71,23 +74,45 @@ const Admin: FunctionComponent = () => {
     if (!file) return alert("Please select a file");
 
     setUploading(true);
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${mapLabel}.${fileExt}`;
-    const filePath = `uploads/${fileName}`;
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("label", mapLabel);
 
-    const { error } = await supabase.storage
-      .from("maps")
-      .upload(filePath, file);
+      const response = await axios.post(
+        `${BACKEND_URL}/upload-file`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
-    setUploading(false);
-
-    if (error) {
-      console.error("Upload error:", error.message);
-      alert("Upload failed");
-    } else {
-      alert("File uploaded successfully!");
-      setFile(null);
+      if (response.data.success) {
+        alert("File uploaded successfully!");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Upload failed!");
+    } finally {
+      setUploading(false);
     }
+    // const fileExt = file.name.split(".").pop();
+    // const fileName = `${mapLabel}.${fileExt}`;
+    // const filePath = `uploads/${fileName}`;
+
+    // const { error } = await supabase.storage
+    //   .from("maps")
+    //   .upload(filePath, file);
+
+    // setUploading(false);
+
+    // if (error) {
+    //   console.error("Upload error:", error.message);
+    //   alert("Upload failed");
+    // } else {
+    //   alert("File uploaded successfully!");
+    //   setFile(null);
+    // }
   };
 
   return (
