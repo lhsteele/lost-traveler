@@ -96,23 +96,6 @@ const Admin: FunctionComponent = () => {
     } finally {
       setUploading(false);
     }
-    // const fileExt = file.name.split(".").pop();
-    // const fileName = `${mapLabel}.${fileExt}`;
-    // const filePath = `uploads/${fileName}`;
-
-    // const { error } = await supabase.storage
-    //   .from("maps")
-    //   .upload(filePath, file);
-
-    // setUploading(false);
-
-    // if (error) {
-    //   console.error("Upload error:", error.message);
-    //   alert("Upload failed");
-    // } else {
-    //   alert("File uploaded successfully!");
-    //   setFile(null);
-    // }
   };
 
   return (

@@ -8,7 +8,8 @@ import "./CarouselComponent.css";
 
 export type FileType = {
   name: string;
-  url: string;
+  thumbnailUrl: string;
+  pdfUrl: string;
 };
 
 const CarouselComponent: FunctionComponent = () => {
@@ -18,41 +19,52 @@ const CarouselComponent: FunctionComponent = () => {
   useEffect(() => {
     const fetchFiles = async () => {
       setLoading(true);
-      const { data, error } = await supabase.storage
+      const { data: thumbnailFiles, error: thumbnailError } =
+        await supabase.storage.from("maps").list("thumbnails");
+
+      if (thumbnailError) {
+        throw new Error(thumbnailError.message);
+      }
+
+      const { data: pdfFiles, error: pdfError } = await supabase.storage
         .from("maps")
         .list("uploads");
-      if (error) {
-        console.error("Error fetching files:", error.message);
-        setLoading(false);
-      } else {
-        const filesWithUrls = await Promise.all(
-          data.map(async (file) => {
-            const { data: urlData } = await supabase.storage
-              .from("maps")
-              .getPublicUrl(`uploads/${file.name}`);
 
-            return { name: file.name, url: urlData?.publicUrl || "" };
-          })
-        );
-
-        setMapFiles(filesWithUrls);
-        setLoading(false);
+      if (pdfError) {
+        throw new Error(pdfError.message);
       }
+
+      const filesWithUrls = await Promise.all(
+        thumbnailFiles.map(async (thumbnailFile) => {
+          const { data: thumbnailUrlData } = supabase.storage
+            .from("maps")
+            .getPublicUrl(`thumbnails/${thumbnailFile.name}`);
+
+          const pdfFileName = thumbnailFile.name.replace(".png", ".pdf");
+          const matchingPdfFile = pdfFiles.find(
+            (pdfFile) => pdfFile.name === pdfFileName
+          );
+
+          const { data: pdfUrlData } = matchingPdfFile
+            ? supabase.storage
+                .from("maps")
+                .getPublicUrl(`uploads/${matchingPdfFile.name}`)
+            : { data: { publicUrl: "" } };
+
+          return {
+            name: pdfFileName,
+            thumbnailUrl: thumbnailUrlData?.publicUrl || "",
+            pdfUrl: (pdfUrlData && pdfUrlData?.publicUrl) || "",
+          };
+        })
+      );
+
+      setMapFiles(filesWithUrls);
+      setLoading(false);
     };
 
     fetchFiles();
   }, []);
-
-  // const getDownloadURL = async (fileName: string) => {
-  //   const { data, error } = await supabase.storage
-  //     .from("maps")
-  //     .createSignedUrl(`uploads/${fileName}`, 60);
-  //   if (error) {
-  //     console.error("Error getting URL:", error.message);
-  //     return;
-  //   }
-  //   window.open(data.signedUrl, "_blank");
-  // };
 
   const sliderSettings = {
     infinite: true,

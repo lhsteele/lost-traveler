@@ -7,6 +7,15 @@ type MapCardProps = {
 };
 
 const MapCard: FunctionComponent<MapCardProps> = ({ mapFile }) => {
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = mapFile.pdfUrl;
+    link.download = mapFile.name;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="map-card">
       <h2>{mapFile.name}</h2>
@@ -14,19 +23,22 @@ const MapCard: FunctionComponent<MapCardProps> = ({ mapFile }) => {
         {mapFile.name.endsWith(".pdf") ? (
           <object
             className="thumbnail-iframe"
-            data={`${mapFile.url}#toolbar=0`}
+            data={`${mapFile.pdfUrl}#toolbar=0`}
             type="application/pdf"
           />
         ) : (
-          <img src={mapFile.url} alt={mapFile.name} width="100" height="100" />
+          <img
+            src={mapFile.thumbnailUrl}
+            alt={mapFile.name}
+            width="100"
+            height="100"
+          />
         )}
       </div>
 
       <br />
       {mapFile.name}
-      <a href={mapFile.url} target="_blank" rel="noopener noreferrer">
-        <button>Download</button>
-      </a>
+      <button onClick={handleDownload}>Download</button>
     </div>
   );
 };
