@@ -1,21 +1,13 @@
 import { FunctionComponent } from "react";
 import "./MapCard.css";
 import { FileType } from "../Carousel/CarouselComponent";
+import PDFDownload from "../PDFDownload/PDFDownload";
 
 type MapCardProps = {
   mapFile: FileType;
 };
 
 const MapCard: FunctionComponent<MapCardProps> = ({ mapFile }) => {
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = mapFile.pdfUrl;
-    link.download = mapFile.name;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className="map-card">
       <h2>{mapFile.name}</h2>
@@ -37,8 +29,7 @@ const MapCard: FunctionComponent<MapCardProps> = ({ mapFile }) => {
       </div>
 
       <br />
-      {mapFile.name}
-      <button onClick={handleDownload}>Download</button>
+      <PDFDownload fileUrl={mapFile.pdfUrl} fileName={mapFile.name} />
     </div>
   );
 };
