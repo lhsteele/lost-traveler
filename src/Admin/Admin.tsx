@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import "./Admin.css";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient.ts";
@@ -26,6 +26,7 @@ const Admin: FunctionComponent = () => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [mapLabel, setMapLabel] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -88,6 +89,11 @@ const Admin: FunctionComponent = () => {
       );
 
       if (response.data.success) {
+        setMapLabel("");
+        setFile(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""; // Clear input
+        }
         alert("File uploaded successfully!");
       }
     } catch (error) {
@@ -109,11 +115,13 @@ const Admin: FunctionComponent = () => {
             type="text"
             onChange={handleMapLabelChange}
             className="admin-input"
+            value={mapLabel}
           />
           <input
             type="file"
             onChange={handleFileChange}
             accept="image/*,.pdf"
+            ref={fileInputRef}
           />
           <button
             onClick={uploadFile}
