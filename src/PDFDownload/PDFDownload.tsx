@@ -1,5 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import axios from "axios";
+import "./PDFDownload.css";
 
 type PDFDownloadProps = {
   fileUrl: string;
@@ -45,7 +46,7 @@ const PDFDownload: FunctionComponent<PDFDownloadProps> = ({
   };
 
   return (
-    <div>
+    <div className="pdf-download">
       <label htmlFor="download-btn">{fileName}</label>
       <button
         onClick={handleDownload}
